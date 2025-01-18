@@ -52,14 +52,14 @@ function ConversionScreen() {
 
     return (
         <View style={styles.container}>
-            <StatusBar barStyle="light-content" backgroundColor="#f7f7f7" />
+            {/* <StatusBar barStyle="light-content" backgroundColor="#f7f7f7" /> */}
             {/* <View style={styles.toolbar}>
                 <Text style={styles.toolbarTitle}>Currency Converter</Text>
             </View> */}
             <View style={styles.inputContainer}>
 
            
-            <Text style={styles.title}>Currency Converter</Text>
+            {/* <Text style={styles.title}>Currency Converter</Text> */}
             <Text style={styles.label}>Select Country:</Text>
             <Picker
                 selectedValue={selectedCountry}
