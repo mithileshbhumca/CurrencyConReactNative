@@ -12,7 +12,7 @@ Displays the converted amount dynamically after clicking the "Convert" button.
 Pre-fills the amount and country when navigated from the History Screen.
 Automatically hides the converted amount field if pre-filled data is being used.
 
-- ** 2. History Screen**:
+- **2. History Screen** :
   
 Displays a list of previously converted amounts, including:
 Converted amount
