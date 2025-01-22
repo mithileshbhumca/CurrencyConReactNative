@@ -2,8 +2,6 @@
 
 This is a React Native project for a **Currency Converter App**. The app allows users to convert a given amount from a selected base country to other currencies, maintain a history of conversions, and navigate seamlessly between a conversion screen and a history screen.
 
----
-
 ## Features
 
 ### 1. Conversion Screen
@@ -20,8 +18,6 @@ This is a React Native project for a **Currency Converter App**. The app allows 
   - Country currency symbol
 - Enables navigation back to the **Conversion Screen** with the selected history item pre-filled.
 
----
-
 ## Tech Stack
 - **React Native**: For building the app interface.
 - **Expo**: For development, testing, and deployment.
@@ -29,7 +25,6 @@ This is a React Native project for a **Currency Converter App**. The app allows 
 - **expo-sqlite**: For saving and fetching historical conversion data in a local SQLite database.
 - **React Navigation**: For handling navigation between screens.
 
----
 
 ## Installation and Setup
 
