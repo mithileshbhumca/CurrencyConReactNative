@@ -4,7 +4,7 @@ This is a React Native project for a Currency Converter App. The app allows user
 
 ## Features
 
-**1. Conversion Screen **
+- **1. Conversion Screen **
 Allows users to input an amount and select a country from a dropdown.
 Converts the input amount based on the latest exchange rates fetched via the ExchangeRate API.
 Displays the converted amount dynamically after clicking the "Convert" button.
