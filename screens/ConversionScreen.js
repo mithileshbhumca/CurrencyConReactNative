@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
     StyleSheet,
@@ -17,13 +17,30 @@ import CountryList from '../components/conversion/CountryList';
 import { countriesData } from '../utils/constants';
 
 
-function ConversionScreen() {
+function ConversionScreen({ route, navigation }) {
     const [error, setError] = useState();
 
     const [selectedCountry, setSelectedCountry] = useState(countriesData[0].code); // Default country
     const [amount, setAmount] = useState('');
     const [conversionResults, setConversionResults] = useState([]);
     const [isFetching, setIsFetching] = useState(false);
+    const [isPrefill, setIsPrefill] = useState(false);
+    // const editedAmount = route.params?.amount;
+
+    // Get the prefilled amount if passed via route.params
+    useEffect(() => {
+        if (route.params) {
+            setIsPrefill(true)
+            setAmount(route.params?.amount.toString());
+            const prefillCountry = countriesData.find(
+                (item) => item.code === route.params.countryCode
+            ).code
+            if (prefillCountry) {
+                setSelectedCountry(prefillCountry);
+            }
+        }
+    }, [route.params]);
+
 
     const handleConversionRates = async () => {
         if (!amount || isNaN(amount)) {
@@ -40,7 +57,10 @@ function ConversionScreen() {
                     countrySymbol: country.symbol,
                     amount: (rates[country.code] * parseFloat(amount)).toFixed(2),
                 }));
+            // saveHistory(selectedCountry, amount); // Save to database
             setConversionResults(results);
+            setIsPrefill(false)
+
         } catch (error) {
             console.error(error);
             alert('Error fetching currency data. Please try again later.');
@@ -52,50 +72,42 @@ function ConversionScreen() {
 
     return (
         <View style={styles.container}>
-            {/* <StatusBar barStyle="light-content" backgroundColor="#f7f7f7" /> */}
-            {/* <View style={styles.toolbar}>
-                <Text style={styles.toolbarTitle}>Currency Converter</Text>
-            </View> */}
             <View style={styles.inputContainer}>
-
-           
-            {/* <Text style={styles.title}>Currency Converter</Text> */}
-            <Text style={styles.label}>Select Country:</Text>
-            <Picker
-                selectedValue={selectedCountry}
-                onValueChange={(itemValue) => setSelectedCountry(itemValue)}
-                style={styles.picker}
-            >
-                {countriesData.map((item) => (
-                    <Picker.Item
-                        label={`${item.name} (${item.code})`}
-                        key={item.code}
-                        value={item.code}
-                    />
-                ))}
-            </Picker>
-            <Text style={styles.label}>Enter Amount:</Text>
-            <TextInput
-                style={styles.input}
-                keyboardType="numeric"
-                value={amount}
-                onChangeText={setAmount}
-                placeholder="Enter amount in selected currency"
-            />
-            <TouchableOpacity style={styles.button} onPress={handleConversionRates}>
-                <Text style={styles.buttonText}>Convert</Text>
-            </TouchableOpacity>
+                <Text style={styles.label}>Select Country:</Text>
+                <Picker
+                    selectedValue={selectedCountry}
+                    onValueChange={(itemValue) => setSelectedCountry(itemValue)}
+                    style={styles.picker}
+                >
+                    {countriesData.map((item) => (
+                        <Picker.Item
+                            label={`${item.name} (${item.code})`}
+                            key={item.code}
+                            value={item.code}
+                        />
+                    ))}
+                </Picker>
+                <Text style={styles.label}>Enter Amount:</Text>
+                <TextInput
+                    style={styles.input}
+                    keyboardType="numeric"
+                    value={amount}
+                    onChangeText={setAmount}
+                    placeholder="Enter amount in selected currency"
+                />
+                <TouchableOpacity style={styles.button} onPress={handleConversionRates}>
+                    <Text style={styles.buttonText}>Convert</Text>
+                </TouchableOpacity>
             </View>
 
             {isFetching ? (
                 <ActivityIndicator size="large" color="#6200EE" />
-            ) : (
+            ) : !isPrefill && (
                 <CountryList conversionResults={conversionResults} />
             )}
 
         </View>
     )
-
 }
 
 export default ConversionScreen;
@@ -105,7 +117,6 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 16,
         backgroundColor: '#f7f7f7',
-        justifyContent: 'center'
     },
     title: {
         fontSize: 24,
@@ -162,12 +173,12 @@ const styles = StyleSheet.create({
     toolbar: {
         backgroundColor: "#6200EE",
         padding: 15,
-      },
-      toolbarTitle: {
+    },
+    toolbarTitle: {
         color: "#FFFFFF",
         fontSize: 20,
         textAlign: "center",
-      },
+    },
 });
 
 const pickerSelectStyles = {

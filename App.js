@@ -8,19 +8,20 @@ import { GlobalStyles } from './constants/styles';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import HistoryScreen from './screens/HistoryScreen';
+import { useEffect, useState } from 'react';
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
 function ConversionOverview() {
   return (
-    <BottomTabs.Navigator 
-    screenOptions={({ navigation }) => ({
-      headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-      headerTintColor: 'white',
-      tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-      tabBarActiveTintColor: GlobalStyles.colors.accent500,
-    })}
+    <BottomTabs.Navigator
+      screenOptions={({ navigation }) => ({
+        headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        headerTintColor: 'white',
+        tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+        tabBarActiveTintColor: GlobalStyles.colors.accent500,
+      })}
     >
       <BottomTabs.Screen
         name="Conversion"
@@ -49,6 +50,26 @@ function ConversionOverview() {
 
 }
 export default function App() {
+  const [dbInitialized, setDbInitialized] = useState(false);
+
+  useEffect(() => {
+    //createTables();
+  }, []);
+
+  // useEffect(() => {
+  //   initializeDatabase()
+  //     .then(() => {
+  //       setDbInitialized(true);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
+
+  // if (!dbInitialized) {
+  //   return <AppLoading />;
+  // }
+
   return (
     <>
       <StatusBar style="light" />
@@ -64,7 +85,12 @@ export default function App() {
             component={ConversionOverview}
             options={{ headerShown: false }}
           />
-         
+          <Stack.Screen
+            name="History"
+            component={HistoryScreen}
+            options={{ headerShown: false }}
+          />
+
         </Stack.Navigator>
       </NavigationContainer>
     </>
