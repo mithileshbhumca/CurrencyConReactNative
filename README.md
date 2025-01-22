@@ -1,5 +1,14 @@
 # Currency Converter App
 
+This is a React Native project for a **Currency Converter App**. The app allows users to convert a given amount from a selected base country to other currencies, maintain a history of conversions, and navigate seamlessly between a conversion screen and a history screen.
+
+---
+
+## Features
+
+
+# Currency Converter App
+
 This is a React Native project for a Currency Converter App. The app allows users to convert a given amount from a selected base country to other currencies, maintain a history of conversions, and navigate seamlessly between a conversion screen and a history screen.
 
 ## Features
