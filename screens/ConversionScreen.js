@@ -25,7 +25,6 @@ function ConversionScreen({ route, navigation }) {
     const [conversionResults, setConversionResults] = useState([]);
     const [isFetching, setIsFetching] = useState(false);
     const [isPrefill, setIsPrefill] = useState(false);
-    // const editedAmount = route.params?.amount;
 
     // Get the prefilled amount if passed via route.params
     useEffect(() => {
