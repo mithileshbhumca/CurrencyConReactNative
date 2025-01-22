@@ -7,7 +7,7 @@ This is a React Native project for a Currency Converter App. The app allows user
 - **1. Conversion Screene** :
   
 Allows users to input an amount and select a country from a dropdown.
-Converts the input amount based on the latest exchange rates fetched via the ExchangeRate API.
+Converts the input amount based on the latest exchange rates fetched via the ExchangeRate API (https://v6.exchangerate-api.com).
 Displays the converted amount dynamically after clicking the "Convert" button.
 Pre-fills the amount and country when navigated from the History Screen.
 Automatically hides the converted amount field if pre-filled data is being used.
@@ -19,3 +19,11 @@ Converted amount
 Selected country name
 Country currency symbol
 Enables navigation back to the Conversion Screen with the selected history item pre-filled.
+
+## Tech Stack
+React Native: For building the app interface.
+Expo: For development, testing, and deployment.
+Axios: For making API requests.
+expo-sqlite: For saving and fetching historical conversion data in a local SQLite database.
+React Navigation: For handling navigation between screens.
+
