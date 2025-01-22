@@ -40,17 +40,11 @@ This is a React Native project for a **Currency Converter App**. The app allows 
   npm install -g expo-cli
 
 ## File Structure
-.
-├── assets/                     # App assets like images
-├── components/                 # Reusable UI components
-│   ├── CountryList.js         # Custom Country List component
-│   └── CountryCell.js          # country item cell component
-├── screens/                    # App screens
-│   ├── ConversionScreen.js     # Currency conversion screen
-│   └── HistoryScreen.js        # Conversion history screen
-├── utils/                      # Helper files
-│   ├── http.js                 # Axios HTTP client setup
-│   └── constants.js            # Static data like currency info
-├── App.js                      # Main entry point of the app
-├── package.json                # Node.js dependencies and metadata
-└── README.md                   # Project documentation
+
+
+## Screenshots
+
+**Conversion Screen**
+
+
+**History Screen**
