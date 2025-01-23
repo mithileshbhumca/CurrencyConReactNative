@@ -13,6 +13,11 @@ const countriesData = [
     { code: "NZD", name: "New Zealand", symbol: "NZ$" },
 ];
 
+const countriesHistroy = [
+    { amount: 1000, country: "United States", countrySymbol: "$", code: "USD", },
+    { amount: 1000, country: "Japan", countrySymbol: "¥", code: "JPY" },
+    { amount: 1000, country: "India", countrySymbol: "₹", code: "INR" },
+];
 const API_BASE_URL = "https://v6.exchangerate-api.com/v6/16f4781b3b5debc56ae9f2ba/latest/";
-
-export { countriesData, API_BASE_URL };
+const databaseName = 'conversion_database'
+export { countriesData, countriesHistroy, API_BASE_URL, databaseName };
