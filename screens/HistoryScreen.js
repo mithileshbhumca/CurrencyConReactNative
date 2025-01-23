@@ -4,19 +4,31 @@ import { useEffect, useState } from "react";
 import { countriesHistroy } from "../utils/constants";
 import { useIsFocused } from "@react-navigation/native";
 import HistroyList from "../components/histroy/HistroyList";
+import { fetchData } from "../utils/database";
 
 
 function HistoryScreen() {
+    const [history, setHistory] = useState([]);
+
+    useEffect(() => {
+        const loadHistory = async () => {
+            const data = await fetchData();
+            setHistory(data);
+        };
+        loadHistory();
+        console.log("loadHistroy", history)
+
+    }, []);
+
     let content = <Text style={styles.infoText}>No History found</Text>;
 
-    if (countriesHistroy.length > 0) {
-      content = <HistroyList item={countriesHistroy} />;
+    if (history.length > 0) {
+        content = <HistroyList item={history} />;
     }
-    
 
     return (
         <View style={styles.container}>
-           {content}
+            {content}
         </View>
     )
 }
@@ -36,6 +48,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
         marginTop: 32,
-      },
+    },
 }
 );

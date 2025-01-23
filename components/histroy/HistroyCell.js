@@ -7,11 +7,11 @@ function HistroyCell({ item }) {
 
     function histroyPressHandler() {
         navigation.navigate('Conversion', {
-          amount: item.amount,
-          countryCode: item.code
+            amount: item.amount,
+            countryCode: item.code
         });
-      }
-    
+    }
+
 
     return (
         <Pressable
@@ -20,7 +20,7 @@ function HistroyCell({ item }) {
         >
             <View style={styles.item}>
                 <Text style={styles.text}>
-                    {item.countrySymbol} {item.amount} - {item.country}
+                    {item.country} ({item.code})  {item.amount}
                 </Text>
             </View>
         </Pressable>
@@ -44,5 +44,5 @@ const styles = StyleSheet.create({
 
     pressed: {
         opacity: 0.75,
-      },
+    },
 })

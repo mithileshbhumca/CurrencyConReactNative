@@ -21,8 +21,6 @@ function CountryList({ conversionResults }) {
 
 export default CountryList;
 
-
-
 const styles = StyleSheet.create({
     resultList: {
         marginTop: 20,

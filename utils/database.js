@@ -1,68 +1,39 @@
+import * as SQLite from 'expo-sqlite';
+import { databaseName } from './constants';
 
-// Open or create the database
+export const createTable = async () => {
+    console.log("initDB");
+    try {
+        const db = await SQLite.openDatabaseAsync(databaseName);
+        await db.execAsync(`
+            CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, country TEXT NOT NULL, code TEXT NOT NULL, amount REAL NOT NULL);
+            `);
+            console.log("DB creted");
 
-import { SQLiteDatabase } from "expo-sqlite";
+    } catch (e) {
+        console.error('initDB:', error);
+    }
+}
 
- const db= SQLiteDatabase
-// import { SQLiteDatabase } from "expo-sqlite";
+export const insertData = async (country, code, amount) => {
+    try {
+        const db = await SQLite.openDatabaseAsync(databaseName);
+        const result = await db.runAsync('INSERT INTO history (country, code, amount) VALUES (?, ?, ?)', [country,code,amount]);
+        console.log("result", result.lastInsertRowId,result.changes);
 
-//const db = await npm list expo-sqlite
-// .openDatabaseAsync('currency_history.db');
+    } catch (e) {
+        console.error('createTable:', error);
+    }
+}
 
-// Initialize the database table
-// export const initializeDatabase = () => {
-//   db.execAsync((tx) => {
-//     tx.executeSql(
-//       `CREATE TABLE IF NOT EXISTS history (
-//         id INTEGER PRIMARY KEY AUTOINCREMENT,
-//         country TEXT NOT NULL,
-//         amount TEXT NOT NULL
-//       );`,
-//       [],
-//       () => console.log("Table created successfully!"),
-//       (_, error) => console.error("Error creating table: ", error)
-//     );
-//   });
-// };
-
-// export const initializeDatabase = async () => {
-//     try {
-//       await db.transactionAsync(async (tx) => {
-//         await tx.executeSql('CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, country TEXT NOT NULL, amount TEXT NOT NULL)');
-//       });
-//     } catch (error) {
-//       console.error('Error creating table:', error);
-//     }
-//   };
-
-
-
-// export const initializeDatabase = await db.execAsync(`
-//     PRAGMA journal_mode = WAL;
-//     CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, country TEXT NOT NULL, amount TEXT NOT NULL);
-//     `);
-// // Save data to the database
-// export const saveHistory = (country, amount) => {
-//   db.transaction((tx) => {
-//     tx.executeSql(
-//       `INSERT INTO history (country, amount) VALUES (?, ?);`,
-//       [country, amount],
-//       () => console.log("Data inserted successfully!"),
-//       (_, error) => console.error("Error inserting data: ", error)
-//     );
-//   });
-// };
-
-// // Fetch data from the database
-// export const fetchHistory = (callback) => {
-//   db.transaction((tx) => {
-//     tx.executeSql(
-//       `SELECT * FROM history;`,
-//       [],
-//       (_, { rows }) => callback(rows._array),
-//       (_, error) => console.error("Error fetching data: ", error)
-//     );
-//   });
-// };
-
-
+export const fetchData = async () => {
+    console.log("fetchData started");
+    try {
+        const db = await SQLite.openDatabaseAsync(databaseName);
+        const allRows = await db.getAllAsync('SELECT * FROM history');
+        console.log("data size", allRows.length);
+        return allRows;
+    } catch (e) {
+        console.error('fetchData:', error);
+    }
+}

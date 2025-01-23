@@ -15,16 +15,23 @@ import axios from 'axios';
 import { fetchConversionRates } from '../utils/http';
 import CountryList from '../components/conversion/CountryList';
 import { countriesData } from '../utils/constants';
+import { createTable, insertData } from '../utils/database';
 
 
 function ConversionScreen({ route, navigation }) {
     const [error, setError] = useState();
 
-    const [selectedCountry, setSelectedCountry] = useState(countriesData[0].code); // Default country
+    const [selectedCountry, setSelectedCountry] = useState(countriesData[0]); // Default country data
+
     const [amount, setAmount] = useState('');
     const [conversionResults, setConversionResults] = useState([]);
     const [isFetching, setIsFetching] = useState(false);
     const [isPrefill, setIsPrefill] = useState(false);
+
+    //initialized and create table
+    useEffect(() => {
+        createTable();
+    }, []);
 
     // Get the prefilled amount if passed via route.params
     useEffect(() => {
@@ -33,33 +40,32 @@ function ConversionScreen({ route, navigation }) {
             setAmount(route.params?.amount.toString());
             const prefillCountry = countriesData.find(
                 (item) => item.code === route.params.countryCode
-            ).code
+            )
             if (prefillCountry) {
-                setSelectedCountry(prefillCountry);
+                setSelectedCountry(prefillCountry)
             }
         }
     }, [route.params]);
 
 
-    const handleConversionRates = async () => {
+      const handleConversionRates = async () => {
         if (!amount || isNaN(amount)) {
             alert('Please enter a valid amount.');
             return;
         }
         setIsFetching(true)
         try {
-            const rates = await fetchConversionRates(selectedCountry);
+            const rates = await fetchConversionRates(selectedCountry.code);
             const results = countriesData
-                .filter((country) => country.code !== selectedCountry)
+                .filter((country) => country.code !== selectedCountry.code)
                 .map((country) => ({
                     country: `${country.name} (${country.code})`,
                     countrySymbol: country.symbol,
                     amount: (rates[country.code] * parseFloat(amount)).toFixed(2),
                 }));
-            // saveHistory(selectedCountry, amount); // Save to database
             setConversionResults(results);
             setIsPrefill(false)
-
+            insertData(selectedCountry.name, selectedCountry.code, amount);// insert item to database
         } catch (error) {
             console.error(error);
             alert('Error fetching currency data. Please try again later.');
@@ -82,7 +88,7 @@ function ConversionScreen({ route, navigation }) {
                         <Picker.Item
                             label={`${item.name} (${item.code})`}
                             key={item.code}
-                            value={item.code}
+                            value={item}
                         />
                     ))}
                 </Picker>
