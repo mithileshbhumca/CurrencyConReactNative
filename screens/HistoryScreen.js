@@ -1,24 +1,23 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
-import CountryList from "../components/conversion/CountryList";
-import { useEffect, useState } from "react";
-import { countriesHistroy } from "../utils/constants";
+import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import HistroyList from "../components/histroy/HistroyList";
 import { fetchData } from "../utils/database";
 
-
 function HistoryScreen() {
     const [history, setHistory] = useState([]);
+    const isFocused = useIsFocused(); // Tracks if the screen is currently focused
 
     useEffect(() => {
         const loadHistory = async () => {
             const data = await fetchData();
             setHistory(data);
         };
-        loadHistory();
-        console.log("loadHistroy", history)
-
-    }, []);
+        if (isFocused) {
+            loadHistory();  // Fetch data only when the screen is focused
+            console.log("loadHistroy", history)
+        }
+    }, [isFocused]); //// Runs the effect whenever the screen focus state changes
 
     let content = <Text style={styles.infoText}>No History found</Text>;
 
@@ -37,7 +36,6 @@ export default HistoryScreen;
 
 
 const styles = StyleSheet.create({
-
     container: {
         flex: 1,
         padding: 16,

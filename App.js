@@ -1,14 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 
 import ConversionScreen from './screens/ConversionScreen';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { GlobalStyles } from './constants/styles';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import HistoryScreen from './screens/HistoryScreen';
-import { useEffect, useState } from 'react';
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -50,26 +48,6 @@ function ConversionOverview() {
 
 }
 export default function App() {
-  const [dbInitialized, setDbInitialized] = useState(false);
-
-  useEffect(() => {
-    //createTables();
-  }, []);
-
-  // useEffect(() => {
-  //   initializeDatabase()
-  //     .then(() => {
-  //       setDbInitialized(true);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
-
-  // if (!dbInitialized) {
-  //   return <AppLoading />;
-  // }
-
   return (
     <>
       <StatusBar style="light" />
@@ -94,34 +72,8 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </>
-
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f7f7f7',
-  },
-
-  toolbar: {
-    height: 56,
-    backgroundColor: '#4CAF50',
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 4,
-  },
-  toolbarTitle: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  content: {
-    flex: 1,
-    padding: 16,
-  },
-
-});
 
 
 

@@ -5,13 +5,10 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    FlatList,
     View,
     ActivityIndicator,
-    StatusBar,
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import axios from 'axios';
 import { fetchConversionRates } from '../utils/http';
 import CountryList from '../components/conversion/CountryList';
 import { countriesData } from '../utils/constants';
@@ -19,8 +16,6 @@ import { createTable, insertData } from '../utils/database';
 
 
 function ConversionScreen({ route, navigation }) {
-    const [error, setError] = useState();
-
     const [selectedCountry, setSelectedCountry] = useState(countriesData[0]); // Default country data
 
     const [amount, setAmount] = useState('');
@@ -48,14 +43,14 @@ function ConversionScreen({ route, navigation }) {
     }, [route.params]);
 
 
-      const handleConversionRates = async () => {
+    const handleConversionRates = async () => {
         if (!amount || isNaN(amount)) {
             alert('Please enter a valid amount.');
             return;
         }
         setIsFetching(true)
         try {
-            const rates = await fetchConversionRates(selectedCountry.code);
+            const rates = await fetchConversionRates(selectedCountry.code); //api calling to fetch rate
             const results = countriesData
                 .filter((country) => country.code !== selectedCountry.code)
                 .map((country) => ({
@@ -123,12 +118,6 @@ const styles = StyleSheet.create({
         padding: 16,
         backgroundColor: '#f7f7f7',
     },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        textAlign: 'center',
-    },
     label: {
         fontSize: 16,
         marginBottom: 8,
@@ -153,60 +142,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
     },
-    resultList: {
-        marginTop: 20,
-    },
-    resultItem: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 10,
-        backgroundColor: '#e8e8e8',
-        borderRadius: 8,
-        marginBottom: 10,
-    },
-    countryText: {
-        fontSize: 16,
-    },
-    amountText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
     picker: {
         height: 50,
         width: "100%",
     },
-    toolbar: {
-        backgroundColor: "#6200EE",
-        padding: 15,
-    },
-    toolbarTitle: {
-        color: "#FFFFFF",
-        fontSize: 20,
-        textAlign: "center",
-    },
-});
 
-const pickerSelectStyles = {
-    inputIOS: {
-        fontSize: 16,
-        paddingVertical: 12,
-        paddingHorizontal: 10,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
-        color: 'black',
-        marginBottom: 16,
-        backgroundColor: '#fff',
-    },
-    inputAndroid: {
-        fontSize: 16,
-        paddingVertical: 8,
-        paddingHorizontal: 10,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
-        color: 'black',
-        marginBottom: 16,
-        backgroundColor: '#fff',
-    },
-};
+});
