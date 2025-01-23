@@ -19,7 +19,7 @@ function HistoryScreen() {
         }
     }, [isFocused]); //// Runs the effect whenever the screen focus state changes
 
-    let content = <Text style={styles.infoText}>No History found</Text>;
+    let content = <Text style={styles.infoText}>No history found.</Text>;
 
     if (history.length > 0) {
         content = <HistroyList item={history} />;
@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#f7f7f7',
     },
     infoText: {
-        color: 'white',
-        fontSize: 16,
+        color: 'black',
+        fontSize: 20,
         textAlign: 'center',
         marginTop: 32,
     },
